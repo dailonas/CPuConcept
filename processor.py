@@ -1,62 +1,5 @@
 import json
-class language:
-    #========================================================================================#
-    LOAD = 1 # Instruction de chagement.
-    '''Help: Charge une valeur dans l'accumulateur '''
-    ADD = 2 # Instruction d'addition.
-    '''Help: '''
-    STORE = 3 # Instruction 
-    '''Help: '''
-    READ = 4 # Lire dans la Memoire de de traille.
-    '''Help: Recharge l'accumulateur avec la valeur stocker à l'adresse memory[addr] de la memoire.'''
-    WRITE = 5 # Ecrire dans la Memoire de travail.
-    '''Help: Ecrit la valeur charger dans l'accumulateur à une adresse de la memoire.'''
-    PUSH = 6
-    '''Help: Ajoute une valeur a backup.'''
-    POP = 7
-    '''Help: Recupere la valeur enregistré dans backup.'''
-    SUB = 8 # Instruction de subtraction.
-    '''Help: '''
-    DIV = 9 # Instruction de division.
-    '''Help: '''
-    MULT = 10 # Instruction de multiplication.
-    '''Help: '''
-    ABS = 11 # Instruction, valeur absolu.
-    '''Help: Charger la valeur absolu de cette valuer (value).'''
-    AABS = 12 # Instruction
-    '''Help: Supprimer la negativité de l'accumulateur.'''
-    SIG = 13 # Instruction
-    '''Help: Changer le signe de la valeur dans l'accumulateur.'''
-    JUMP = 14 #Saut conditionel
-    '''Help: Aller à addr.'''
-    JUMPZ = 15 #Saut conditionel
-    '''Help: Aller à addr si accumulator = 0.'''
-    JUMPD = 16 #Saut conditionel
-    '''Help: Aller à addr si accumulator != 0'''
-
-    
-    #==================================================================================================#
-    test=1000
-    
-    
-    
-
-    CMP=test # Comparaison
-    '''Help: '''
-    CEQ= test# Comparaison
-    '''Help: '''
-    CNEQ=test # Comparaison
-    '''Help: '''
-    CLT=test # Comparaison
-    '''Help: '''
-    CGT= test# Comparaison
-    '''Help: '''
-
-    #===========================================================================================#
-    
-    END = 99 # Instruction d'arrrete du cpu.   
-    #==========================================================================================#
-    
+import time
 
 class cpuConcept:
 
@@ -190,6 +133,15 @@ class cpuConcept:
                 if self.accumulator != 0:
                     self.cp= addr - 1
                     print(f"=> Saut conditionnel(!0) à l'adresse {self.cp}.")
+                else:
+                    print(f"=> Saut conditionnel(!0) vérifié!")
+                    continue
+                    
+                
+            elif opcode == 17: # STOP, (Pause inconditionnel).
+                self.cp +=1
+                value = self.memoryProgram[self.cp]
+                time.sleep(value)
 
             elif opcode == 99: # END, arrêt du  programme
                 self.running = False
@@ -223,9 +175,10 @@ class cpuConcept:
         
     def save_to_file(self, filename1, filename2):
         with open(filename1, 'w') as f:
-            json.dump(self.memoryData, f)
+            json.dump(self.memoryData[:50], f)
         with open(filename2, 'w') as f:
-            json.dump(self.memoryProgram, f)
+            json.dump(self.memoryProgram[:50], f)
+
 
     def display_state(self):
          """affiche lles informations apres execution"""
@@ -238,4 +191,75 @@ class cpuConcept:
          print(f"Contenu du backup: {self.memoryData[self.backup_start:self.backup_start+min(10, self.backup_pointer)]}")
          print("============================================================")
          
-
+#============#
+class address:
+    #==============#
+    addr = [0] * 999
+    addr[0] = 1001 
+    addr[1] = 1002
+    addr[2] = 1003
+    addr[3] = 1004
+    addr[4] = 1005
+    addr[5] = 1006
+    addr[6] = 1007
+    addr[7] = 1008
+    addr[8] = 1009
+    addr[9] = 1010
+    addr[10] = 1011
+    addr[11] = 1012
+    addr[12] = 1013
+    addr[13] = 1014
+    addr[14] = 1015
+    addr[15] = 1016
+#==================#
+class language:
+    #========================================================================================#
+    LOAD = 1 # Instruction de chagement.
+    '''Help: Charge une valeur dans l'accumulateur '''
+    ADD = 2 # Instruction d'addition.
+    '''Help: '''
+    STORE = 3 # Instruction 
+    '''Help: '''
+    READ = 4 # Lire dans la Memoire de de traille.
+    '''Help: Recharge l'accumulateur avec la valeur stocker à l'adresse memory[addr] de la memoire.'''
+    WRITE = 5 # Ecrire dans la Memoire de travail.
+    '''Help: Ecrit la valeur charger dans l'accumulateur à une adresse de la memoire.'''
+    PUSH = 6
+    '''Help: Ajoute une valeur a backup.'''
+    POP = 7
+    '''Help: Recupere la valeur enregistré dans backup.'''
+    SUB = 8 # Instruction de subtraction.
+    '''Help: '''
+    DIV = 9 # Instruction de division.
+    '''Help: '''
+    MULT = 10 # Instruction de multiplication.
+    '''Help: '''
+    ABS = 11 # Instruction, valeur absolu.
+    '''Help: Charger la valeur absolu de cette valuer (value).'''
+    AABS = 12 # Instruction
+    '''Help: Supprimer la negativité de l'accumulateur.'''
+    SIG = 13 # Instruction
+    '''Help: Changer le signe de la valeur dans l'accumulateur.'''
+    JUMP = 14 #Saut conditionel
+    '''Help: Aller à addr.'''
+    JUMPZ = 15 #Saut conditionel
+    '''Help: Aller à addr si accumulator = 0.'''
+    JUMPD = 16 #Saut conditionel
+    '''Help: Aller à addr si accumulator != 0'''
+    STOP = 17 #Pause inconditionel
+    '''Help: Faire une du programme.'''
+    #==================================================================================================#
+    test=1000
+    CMP=test # Comparaison
+    '''Help: '''
+    CEQ= test# Comparaison
+    '''Help: '''
+    CNEQ=test # Comparaison
+    '''Help: '''
+    CLT=test # Comparaison
+    '''Help: '''
+    CGT= test# Comparaison
+    '''Help: '''
+    #===========================================================================================#
+    END = 99 # Instruction d'arrrete du cpu.   
+    #==========================================================================================#  
